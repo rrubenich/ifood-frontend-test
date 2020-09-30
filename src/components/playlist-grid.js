@@ -3,8 +3,15 @@ import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 
 /**
+ * @typedef {Object} Props
+ *
+ * @property {JSX.Element} children - One or more PlaylistCard component
+ */
+
+/**
  * Create a Grid component to show the list of playlists
  *
+ * @param {Props} props
  * @type {JSX.Element}
  */
 function PlaylistGrid({ children }) {

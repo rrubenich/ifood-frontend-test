@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import Toolbar from "@material-ui/core/Toolbar";
 
 /**
- * @typedef Props
- * @type {Object}
- *
+ * @typedef {object} Props
  * @property {JSX.Element} logo
  */
 

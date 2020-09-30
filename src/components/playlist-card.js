@@ -11,6 +11,14 @@ import {
 } from "@material-ui/core";
 
 /**
+ * @typedef {Object} Props
+ *
+ * @property {string} name - The playlist title
+ * @property {string} image - An URL to render the playlist cover
+ * @property {string} description - A description to describle the playlist
+ */
+
+/**
  * Set a 100% height to show all cards in a perfect line and the display flex
  * to organize inner components
  *
@@ -45,12 +53,12 @@ const StyledCardMedia = styled(CardMedia)`
  *
  * The Material styled is kept, only a few sizing and position adjusts are made
  *
+ * @param {Props} props
  * @type {JSX.Element}
  */
 function PlaylistCard({ name, description, image }) {
   /**
-   * Checks if an image is passed as prop, otherwise,
-   * renders an Material.Spinner component
+   * Checks if an image is passed as prop, otherwise renders an Material.Spinner component
    *
    * @type {JSX.Element}
    */
