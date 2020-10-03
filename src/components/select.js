@@ -42,7 +42,7 @@ function renderOption({ name, value, key }) {
  * @type {JSX.Element}
  */
 function Select(props) {
-  const { label, options } = this.props;
+  const { label, options } = props;
 
   /**
    * Renders the Select options
