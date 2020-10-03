@@ -16,7 +16,7 @@ const StyledTypography = styled(Typography)`
 /**
  * Simple text based component for showing Spotifood logo
  *
- * @type {JSX.Element}
+ * @return {JSX.Element}
  */
 function Logo() {
   return (

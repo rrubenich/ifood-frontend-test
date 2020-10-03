@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 
 /**
  * @typedef {object} Props
+ *
  * @property {JSX.Element} logo
  */
 
@@ -15,7 +16,9 @@ import Toolbar from "@material-ui/core/Toolbar";
  * @param {Props} props
  * @return {JSX.Element}
  */
-function Header({ logo }) {
+function Header(props) {
+  const { logo } = props;
+
   return <Toolbar>{logo}</Toolbar>;
 }
 

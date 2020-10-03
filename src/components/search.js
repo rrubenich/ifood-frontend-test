@@ -1,24 +1,25 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { TextField } from "@material-ui/core";
-import { IconButton, InputAdornment } from "@material-ui/core/IconButton";
+import { TextField, IconButton, InputAdornment } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 
 /**
  * @typedef {Object} Props
  *
- * @property {Function} onChange - Called when the field text is changed.
- * @property {Function} onClear - Called when the clear icon button is clicked.
- * @property {string} value - The Search Box Input value.
+ * @property {Function} onChange - Callback called when the field text is changed
+ * @property {Function} onClear - Callback called when the clear icon button is clicked
+ * @property {string} value - The Search Box Input value
  */
 
 /**
  * Compose a Search Box component
  *
  * @param {Props} props
- * @type {JSX.Element}
+ * @return {JSX.Element}
  */
-function Search({ onChange, onClear, value }) {
+function Search(props) {
+  const { onClear, value } = props;
+
   /**
    * Renders the clear icon button when the component receives a value
    *
@@ -44,11 +45,10 @@ function Search({ onChange, onClear, value }) {
       name="search"
       color="primary"
       variant="outlined"
-      placeholder="Busque por nome da playlist"
       value={value}
-      onChange={onChange}
       InputProps={{ endAdornment }}
       fullWidth
+      {...props}
     />
   );
 }
@@ -58,7 +58,6 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
-  onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   value: PropTypes.string,
 };

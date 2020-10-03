@@ -54,9 +54,11 @@ const StyledCardMedia = styled(CardMedia)`
  * The Material styled is kept, only a few sizing and position adjusts are made
  *
  * @param {Props} props
- * @type {JSX.Element}
+ * @return {JSX.Element}
  */
-function PlaylistCard({ name, description, image }) {
+function PlaylistCard(props) {
+  const { name, description, image } = props;
+
   /**
    * Checks if an image is passed as prop, otherwise renders an Material.Spinner component
    *

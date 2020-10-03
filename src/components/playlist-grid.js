@@ -14,7 +14,9 @@ import { Grid } from "@material-ui/core";
  * @param {Props} props
  * @type {JSX.Element}
  */
-function PlaylistGrid({ children }) {
+function PlaylistGrid(props) {
+  const { children } = props;
+
   /**
    * Checks if the received children property is an Array (and if it exists)
    *
