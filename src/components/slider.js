@@ -33,7 +33,7 @@ function renderValueLabelComponent(props) {
 }
 
 /**
- * Create a Spinner with InputNumber component.
+ * Create a Slider with InputNumber component.
  *
  * @param {Props} props
  * @type {JSX.Element}

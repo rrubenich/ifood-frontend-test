@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import {
   Select as MUISelect,
   FormControl,
@@ -12,6 +13,7 @@ import {
  *
  * @property {string} label - The input label
  * @property {Array} options - An array with selectable options
+ * @property {boolean} hideNoOption - Defines if show the option null
  */
 
 /**
@@ -42,7 +44,8 @@ function renderOption({ name, value, key }) {
  * @type {JSX.Element}
  */
 function Select(props) {
-  const { label, options } = props;
+  const { label, options, hideNoOption } = props;
+  const { t } = useTranslation();
 
   /**
    * Renders the Select options
@@ -61,16 +64,22 @@ function Select(props) {
     <FormControl variant="outlined" size="small" fullWidth>
       <InputLabel>{label}</InputLabel>
       <MUISelect label={label} {...props}>
-        {renderOption({ name: "Nenhum", value: null, key: "none" })}
+        {!hideNoOption &&
+          renderOption({ name: t("select.none"), value: null, key: "none" })}
         {renderOptions}
       </MUISelect>
     </FormControl>
   );
 }
 
+Select.defaultProps = {
+  hideNoOption: false,
+};
+
 Select.propTypes = {
   label: PropTypes.string,
   options: PropTypes.array,
+  hideNoOption: PropTypes.bool,
 };
 
 export default Select;

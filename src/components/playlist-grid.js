@@ -1,10 +1,12 @@
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 
 /**
  * @typedef {Object} Props
  *
+ * @property {string} loading - Defines if the component is a loading state
  * @property {JSX.Element} children - One or more PlaylistCard component
  */
 
@@ -15,7 +17,7 @@ import { Grid } from "@material-ui/core";
  * @type {JSX.Element}
  */
 function PlaylistGrid(props) {
-  const { children } = props;
+  const { loading, children } = props;
 
   /**
    * Checks if the received children property is an Array (and if it exists)
@@ -29,7 +31,7 @@ function PlaylistGrid(props) {
     if (Array.isArray(children)) {
       return children.map((child) => (
         // @TODO: handle with react elements ids
-        <Grid item key={child.id} xs={6} sm={4} md={3}>
+        <Grid key={child.id} xs={6} sm={4} md={3} item>
           {child}
         </Grid>
       ));
@@ -38,6 +40,20 @@ function PlaylistGrid(props) {
     return children;
   }, [children]);
 
+  if (loading) {
+    return (
+      <Grid container spacing={4}>
+        {Array.from(new Array(6)).map((item, index) => (
+          <Grid key={index} xs={6} sm={4} md={3} item>
+            <Skeleton variant="rect" height={140} />
+            <Skeleton height={40} />
+            <Skeleton width="60%" />
+          </Grid>
+        ))}
+      </Grid>
+    );
+  }
+
   return (
     <Grid container spacing={4}>
       {items}
@@ -45,8 +61,13 @@ function PlaylistGrid(props) {
   );
 }
 
+PlaylistGrid.defaultProps = {
+  loading: false,
+};
+
 PlaylistGrid.propTypes = {
   children: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default PlaylistGrid;
