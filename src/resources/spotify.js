@@ -28,9 +28,13 @@ const spotify = (function () {
       body: "grant_type=client_credentials",
     });
 
-    const { access_token } = await result.json();
+    if (result.ok) {
+      const { access_token } = await result.json();
 
-    return access_token;
+      return access_token;
+    }
+
+    throw result;
   };
 
   /**
@@ -49,9 +53,13 @@ const spotify = (function () {
       headers: { Authorization: "Bearer " + token },
     });
 
-    const { playlists } = await result.json();
+    if (result.ok) {
+      const { message, playlists } = await result.json();
 
-    return playlists;
+      return { ...playlists, message };
+    }
+
+    throw result;
   };
 
   return {
