@@ -1,4 +1,4 @@
-class Filter {
+class Filters {
   /**
    * Creates an instance of available filters for Spotify featured playlist
    *
@@ -6,13 +6,13 @@ class Filter {
    * creating only attributes that we will show
    *
    * @param {object} data
-   * @memberof Filter
+   * @memberof Filters
    */
   constructor(data = {}) {
     /**
      * @property {object} locale - The locale option filter
      */
-    this.locale = data.locale || null;
+    this.locale = data.locale;
     /**
      * @property {object} country - The country option filter
      */
@@ -24,26 +24,26 @@ class Filter {
     /**
      * @property {string} limit - A integer number to set the limit filter
      */
-    this.limit = data.limit || 0;
+    this.limit = data.limit;
     /**
      * @property {number} offset - A integer number to set the offset filter
      */
-    this.offset = data.offset || 0;
+    this.offset = data.offset;
   }
 
   /**
    * Helper to change class values in a immutable way.
-   * Every change will return a new instance of Filter class
+   * Every change will return a new instance of Filters class
    *
-   * @param {string} field - Filter attribute to update
-   * @param {any} value - Filter value to update
+   * @param {string} field - Filters attribute to update
+   * @param {any} value - Filters value to update
    *
-   * @return {Filter}
-   * @memberof Filter
+   * @return {Filters}
+   * @memberof Filters
    */
   set(field, value) {
-    return new Filter({ ...this, [field]: value });
+    return new Filters({ ...this, [field]: value });
   }
 }
 
-export default Filter;
+export default Filters;

@@ -1,15 +1,18 @@
 import React, { Fragment, useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { useTranslation } from "react-i18next";
 import filterResource from "../resources/filter";
-import Filter from "../models/Filter";
+import Filters from "../models/Filters";
 import Select from "../components/select";
 import Slider from "../components/slider";
+import STATUS from "../constants/status";
 
 /**
  * @typedef {Object} Props
@@ -19,18 +22,6 @@ import Slider from "../components/slider";
  */
 
 /**
- * Enum for display data status.
- *
- * @readonly
- * @enum {string}
- */
-const STATUS = {
-  LOADING: "LOADING",
-  DATA: "DATA",
-  ERROR: "ERROR",
-};
-
-/**
  * Create an application Filters
  *
  * The unique purpose of Filters component is to correctly position the logo
@@ -38,26 +29,28 @@ const STATUS = {
  * @param {Props} props
  * @return {JSX.Element}
  */
-function Filters({ onChange, value }) {
-  const [avaiableFilters, setAvailableFilters] = useState({});
+function FiltersBox({ onChange, value }) {
+  const [filters, setFilters] = useState({});
   const [status, setStatus] = useState(STATUS.LOADING);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
+    /**
+     * Fetch the avaiable filters and manipulate the container status
+     *
+     * @async
+     */
     async function fetchData() {
       setStatus(STATUS.LOADING);
 
       try {
         const { filters } = await filterResource.fetchAvailableFilters();
         const filtersDict = filters.reduce(
-          (dict, filter) => ({
-            ...dict,
-            [filter.id]: filter,
-          }),
+          (dict, filter) => ({ ...dict, [filter.id]: filter }),
           {},
         );
 
-        setAvailableFilters(filtersDict);
-
+        setFilters(filtersDict);
         setStatus(STATUS.DATA);
       } catch (error) {
         setStatus(STATUS.ERROR);
@@ -67,66 +60,80 @@ function Filters({ onChange, value }) {
     fetchData();
   }, []);
 
+  /**
+   * Create an object to group the onChange callbacks
+   * This object provite a clean way to see which fields are manipulable
+   *
+   * @type {object}
+   */
   const handleChange = useMemo(
     () => ({
-      locale: (event) => onChange("locale", event.target.value),
+      locale: (event) => {
+        i18n.changeLanguage(event.target.value);
+        return onChange("locale", event.target.value);
+      },
       country: (event) => onChange("country", event.target.value),
       timestamp: (value) => onChange("timestamp", value),
       limit: (event, value) => onChange("limit", value),
       offset: (event, value) => onChange("offset", value),
     }),
-    [onChange],
+    [i18n, onChange],
   );
 
-  const { locale, country, timestamp, limit, offset } = avaiableFilters;
+  if (status === STATUS.ERROR) {
+    return <Typography>Ocorreu um erro para carregar os filtros</Typography>;
+  }
 
   if (status === STATUS.DATA) {
+    const { locale, country, limit } = filters;
+
     return (
       <Fragment>
-        <Grid container spacing={3}>
-          <Grid item xs={6} sm={3}>
+        <Grid justify="flex-end" spacing={3} container>
+          <Grid item lg={4}>
             <Select
               key={locale.name}
-              label={locale.name}
+              label={t("filters.locale")}
               options={locale.values}
               value={value.locale}
               onChange={handleChange.locale}
+              hideNoOption
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item lg={4}>
             <Select
               key={country.name}
-              label={country.name}
+              label={t("filters.country")}
               options={country.values}
               value={value.country}
               onChange={handleChange.country}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Slider
-              label={limit.name}
-              value={value.limit}
-              min={limit.validation.min}
-              max={limit.validation.max}
-              onChange={handleChange.limit}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item lg={4}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 size="small"
                 inputVariant="outlined"
                 format="MM/dd/yyyy"
-                label={timestamp.name}
+                label={t("filters.timestamp")}
                 value={value.timestamp}
                 onChange={handleChange.timestamp}
                 fullWidth
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item lg={3}>
             <Slider
-              label={offset.name}
+              label={t("filters.limit")}
+              min={limit.validation.min}
+              max={limit.validation.max}
+              value={value.limit}
+              onChange={handleChange.limit}
+            />
+          </Grid>
+          <Grid item lg={3}>
+            <Slider
+              label={t("filters.offset")}
               value={value.offset}
               onChange={handleChange.offset}
             />
@@ -136,12 +143,17 @@ function Filters({ onChange, value }) {
     );
   }
 
-  return "test";
+  return (
+    <Fragment>
+      <Skeleton height={50} />
+      <Skeleton height={50} />
+    </Fragment>
+  );
 }
 
-Filters.propTypes = {
+FiltersBox.propTypes = {
   onChange: PropTypes.func,
-  value: PropTypes.instanceOf(Filter),
+  value: PropTypes.instanceOf(Filters),
 };
 
-export default Filters;
+export default FiltersBox;
