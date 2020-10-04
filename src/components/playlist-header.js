@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Box, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
@@ -23,10 +23,10 @@ function PlaylistHeader(props) {
 
   if (loading) {
     return (
-      <Fragment>
+      <Box mt="2rem" mb="2rem">
         <Skeleton width={300} height={60} />
-        <Skeleton width={200} height={20} />
-      </Fragment>
+        <Skeleton width={200} height={20} />{" "}
+      </Box>
     );
   }
 

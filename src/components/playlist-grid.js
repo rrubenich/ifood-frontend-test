@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
