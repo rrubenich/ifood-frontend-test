@@ -5,20 +5,25 @@
  * @return {string} A string query to append to spotify fetch path
  */
 function filterQueryBuilder(filters) {
-  let first = true;
-  return Object.keys(filters).reduce((query, filter) => {
-    if (filters[filter] != null) {
-      if (first) {
-        first = false;
+  if (filters != null && typeof filters === "object") {
+    let first = true;
 
-        return `?${filter}=${filters[filter]}`;
+    return Object.keys(filters).reduce((query, filter) => {
+      if (filters[filter] != null) {
+        if (first) {
+          first = false;
+
+          return `?${filter}=${filters[filter]}`;
+        }
+
+        query = `${query}&${filter}=${filters[filter]}`;
       }
 
-      query = `${query}&${filter}=${filters[filter]}`;
-    }
+      return query;
+    }, "");
+  }
 
-    return query;
-  }, "");
+  return "";
 }
 
 export default filterQueryBuilder;
