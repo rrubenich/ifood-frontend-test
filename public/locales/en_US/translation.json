@@ -1,0 +1,18 @@
+{
+  "search": {
+    "placeholder": "Search playlists by name"
+  },
+  "select": {
+    "none": "No Option"
+  },
+  "playlists": {
+    "description": "The Spotify featured playlists"
+  },
+  "filters": {
+    "locale": "Locale",
+    "country": "Country",
+    "timestamp": "Date and Time",
+    "limit": "Quantity",
+    "offset": "Offset"
+  }
+}
