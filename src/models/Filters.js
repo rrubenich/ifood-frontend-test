@@ -32,7 +32,7 @@ class Filters {
   }
 
   /**
-   * Helper to change class values in a immutable way.
+   * Helper to change class values in a immutable way
    * Every change will return a new instance of Filters class
    *
    * @param {string} field - Filters attribute to update
@@ -43,6 +43,19 @@ class Filters {
    */
   set(field, value) {
     return new Filters({ ...this, [field]: value });
+  }
+
+  /**
+   * Helper to merge an object to class values
+   * This method helps when more than one value need to be setted
+   *
+   * @param {object} obj - Filters attribute to update
+   *
+   * @return {Filters}
+   * @memberof Filters
+   */
+  merge(obj) {
+    return new Filters({ ...this, ...obj });
   }
 }
 

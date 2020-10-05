@@ -15,6 +15,18 @@ class Playlists {
      */
     this.items = data.items;
     /**
+     * @property {number} limit - The maximum quantity of items.
+     */
+    this.limit = data.limit;
+    /**
+     * @property {number} total - The maximum quantity of items.
+     */
+    this.total = data.total;
+    /**
+     * @property {number} offset - The list offset.
+     */
+    this.offset = data.offset;
+    /**
      * @property {Array} originalItems - A copy of the complete fetched playlist items.
      */
     this.originalItems = this.setupOriginalItems(
@@ -47,7 +59,7 @@ class Playlists {
    * @memberof Playlists
    */
   filterBy(field, value) {
-    if (field != null && value != null) {
+    if (field != null && value != null && Array.isArray(this.originalItems)) {
       const regexFilter = new RegExp(value.toUpperCase());
 
       return new Playlists({

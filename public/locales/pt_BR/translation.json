@@ -12,7 +12,8 @@
     "locale": "Localização",
     "country": "País",
     "timestamp": "Data e Horário",
-    "limit": "Quantitidade",
-    "offset": "Página"
+    "limit": "Quantitidade por página",
+    "offset": "Página",
+    "error": "Ocorreu um erro para carregar os filtros"
   }
 }

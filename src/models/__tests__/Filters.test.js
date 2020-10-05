@@ -19,4 +19,11 @@ describe("Test the Filters Model", () => {
       country: "US",
     });
   });
+
+  it("should change one attribute when merge method is called", () => {
+    expect(new Filters(baseObject).merge({ country: "US" })).toMatchObject({
+      ...baseObject,
+      country: "US",
+    });
+  });
 });

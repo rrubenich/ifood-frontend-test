@@ -13,6 +13,7 @@
     "country": "Country",
     "timestamp": "Date and Time",
     "limit": "Quantity",
-    "offset": "Offset"
+    "offset": "Offset",
+    "error": "An error occurred while loading the filters"
   }
 }

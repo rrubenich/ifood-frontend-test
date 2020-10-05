@@ -12,8 +12,10 @@ import Filters from "../models/Filters";
 import Playlists from "../models/Playlists";
 import filterQueryBuilder from "../libs/filter-query-builder";
 import PlaylistHeader from "../components/playlist-header";
+import STATUS from "../constants/status.js";
+import Pagination from "../components/pagination";
 
-const REFRESH_MILLISECONDS_INTERVAL = 5000;
+const REFRESH_MILLISECONDS_INTERVAL = 30000;
 
 /**
  * Compose the Home page
@@ -27,15 +29,16 @@ function Home() {
   const [data, setData] = useState(new Playlists());
   const [token, setToken] = useState(null);
   const [query, setQuery] = useState(null);
+  const [status, setStatus] = useState(STATUS.LOADING);
   const [shouldFilter, setShouldFilter] = useState(false);
   const { t, i18n } = useTranslation();
   const [filter, setFilter] = useState(
     new Filters({
       locale: i18n.language,
-      country: null,
+      country: "BR",
       timestamp: null,
-      limit: null,
-      offset: null,
+      limit: 20,
+      offset: 0,
     }),
   );
 
@@ -62,16 +65,37 @@ function Home() {
   );
 
   /**
+   * Set the filter value when the FiltersBox container change
+   *
+   * @type {Function}
+   */
+  const handleBatchChangeFilter = useCallback(
+    (obj) => {
+      setFilter(filter.merge(obj));
+    },
+    [filter],
+  );
+
+  /**
    * Fetch Playlists from API
    *
    * @type {Function}
    */
   const handleFetchPlaylists = useCallback(async () => {
-    const filterQuery = filterQueryBuilder(filter);
-    const playlists = await spotify.fetchPlaylists(token, filterQuery);
+    try {
+      const filterQuery = filterQueryBuilder(filter);
+      const playlists = await spotify.fetchPlaylists(token, filterQuery);
 
-    setData(new Playlists(playlists));
-    setShouldFilter(true);
+      setData(new Playlists(playlists));
+      setShouldFilter(true);
+      setStatus(STATUS.DATA);
+    } catch (error) {
+      if (error.status === 401) {
+        setToken(null);
+      } else {
+        setStatus(STATUS.ERROR);
+      }
+    }
   }, [filter, token]);
 
   /**
@@ -146,29 +170,49 @@ function Home() {
         <Header logo={<Logo />} />
       </Container>
       <Container maxWidth="md">
-        <Box mt="1rem" mb="2rem">
-          <Box mb="1.5rem">
+        <Box mt={1} mb={2}>
+          <Box mb={3}>
             <Search
               onChange={handleChangeQuery}
               placeholder={t("search.placeholder")}
               value={query}
             />
           </Box>
-          <FiltersBox value={filter} onChange={handleChangeFilter} />
+          <FiltersBox
+            value={filter}
+            onChange={handleChangeFilter}
+            onBatchChange={handleBatchChangeFilter}
+            total={data.total}
+          />
         </Box>
       </Container>
       <Container maxWidth="md">
-        <PlaylistHeader message={data.message} loading={data.message == null} />
-        <PlaylistGrid loading={data.message == null}>
+        <PlaylistHeader
+          message={data.message}
+          loading={status === STATUS.LOADING}
+        />
+        <PlaylistGrid loading={status === STATUS.LOADING}>
           {data.items.map(({ id, name, images, description }) => (
             <PlaylistCard
               key={id}
+              id={id}
               name={name}
               image={images[0].url}
               description={description}
             />
           ))}
         </PlaylistGrid>
+      </Container>
+      <Container maxWidth="md">
+        <Box display="flex" p={3} justifyContent="flex-end">
+          <Pagination
+            pageSize={filter.limit}
+            offset={filter.offset}
+            itemsTotal={data.total}
+            onChange={handleChangeFilter}
+            shape="rounded"
+          />
+        </Box>
       </Container>
     </Fragment>
   );
