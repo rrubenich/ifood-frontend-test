@@ -213,7 +213,7 @@ function Home() {
               />
             ))}
           </PlaylistGrid>
-          <Box display="flex" p={3} justifyContent="flex-end">
+          <Box display="flex" pt={4} pm={6} justifyContent="flex-end">
             <Pagination
               pageSize={filter.limit}
               offset={filter.offset}
