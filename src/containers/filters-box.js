@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
   KeyboardDateTimePicker,
@@ -13,6 +13,7 @@ import Filters from "../models/Filters";
 import Select from "../components/select";
 import Slider from "../components/slider";
 import STATUS from "../constants/status";
+import ErrorState from "../components/error-state";
 
 /**
  * @typedef {Object} Props
@@ -36,35 +37,34 @@ function FiltersBox(props) {
   const [status, setStatus] = useState(STATUS.LOADING);
   const { t, i18n } = useTranslation();
 
-  useEffect(() => {
-    /**
-     * Fetch the avaiable filters and manipulate the container status.
-     *
-     * @async
-     */
-    async function fetchData() {
-      setStatus(STATUS.LOADING);
+  /**
+   * Fetch the available filters and manipulate the container status.
+   *
+   * @async
+   * @type {Function}
+   */
+  const handleFetchData = useCallback(async () => {
+    try {
+      const { filters } = await filterResource.fetchAvailableFilters();
+      const filtersDict = filters.reduce(
+        (dict, filter) => ({ ...dict, [filter.id]: filter }),
+        {},
+      );
 
-      try {
-        const { filters } = await filterResource.fetchAvailableFilters();
-        const filtersDict = filters.reduce(
-          (dict, filter) => ({ ...dict, [filter.id]: filter }),
-          {},
-        );
-
-        setFilters(filtersDict);
-        setStatus(STATUS.DATA);
-      } catch (error) {
-        setStatus(STATUS.ERROR);
-      }
+      setFilters(filtersDict);
+      setStatus(STATUS.DATA);
+    } catch (error) {
+      setStatus(STATUS.ERROR);
     }
-
-    fetchData();
   }, []);
+
+  useEffect(() => {
+    handleFetchData();
+  }, [handleFetchData]);
 
   /**
    * Create an object to group the onChange callbacks.
-   * This object provite a clean way to see which fields are manipulable.
+   * This object provide a clean way to see which fields are manipulable.
    *
    * @type {object}
    */
@@ -82,7 +82,12 @@ function FiltersBox(props) {
   );
 
   if (status === STATUS.ERROR) {
-    return <Typography>{t("filters.error")}</Typography>;
+    return (
+      <ErrorState
+        message={t("filters.error")}
+        onReloadClick={handleFetchData}
+      />
+    );
   }
 
   if (status === STATUS.DATA) {
@@ -90,7 +95,7 @@ function FiltersBox(props) {
 
     return (
       <Grid spacing={3} container>
-        <Grid item lg={3}>
+        <Grid item lg={3} md={3} sm={6} xs={12}>
           <Select
             key={locale.name}
             label={t("filters.locale")}
@@ -99,7 +104,7 @@ function FiltersBox(props) {
             onChange={handleChange.locale}
           />
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={3} md={3} sm={6} xs={12}>
           <Select
             key={country.name}
             label={t("filters.country")}
@@ -108,7 +113,7 @@ function FiltersBox(props) {
             onChange={handleChange.country}
           />
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={3} md={3} sm={6} xs={12}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDateTimePicker
               size="small"
@@ -121,7 +126,7 @@ function FiltersBox(props) {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item lg={3}>
+        <Grid item lg={3} md={3} sm={6} xs={12}>
           <Slider
             label={t("filters.limit")}
             min={limit.validation.min}
