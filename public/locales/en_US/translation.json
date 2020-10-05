@@ -1,0 +1,21 @@
+{
+  "search": {
+    "placeholder": "Search playlists by name"
+  },
+  "select": {
+    "none": "No Option"
+  },
+  "playlists": {
+    "description": "The Spotify featured playlists",
+    "error": "An error occurred while loading the playlists"
+  },
+  "filters": {
+    "locale": "Locale",
+    "country": "Country",
+    "timestamp": "Date and Time",
+    "limit": "Quantity",
+    "offset": "Offset",
+    "error": "An error occurred while loading the filters"
+  },
+  "reload": "Reload"
+}

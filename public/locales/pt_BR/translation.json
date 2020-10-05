@@ -1,0 +1,21 @@
+{
+  "search": {
+    "placeholder": "Busque playlists pelo nome"
+  },
+  "select": {
+    "none": "Nenhum"
+  },
+  "playlists": {
+    "description": "Playlists em destaque do Spotify",
+    "error": "Ocorreu um erro ao carregar as playlists"
+  },
+  "filters": {
+    "locale": "Localização",
+    "country": "País",
+    "timestamp": "Data e Horário",
+    "limit": "Quantitidade por página",
+    "offset": "Página",
+    "error": "Ocorreu um erro para carregar os filtros"
+  },
+  "reload": "Recarregar"
+}
