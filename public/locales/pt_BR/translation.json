@@ -7,7 +7,7 @@
   },
   "playlists": {
     "description": "Playlists em destaque do Spotify",
-    "error": "Ocorreu um erro para carregar a lista de playlists"
+    "error": "Ocorreu um erro ao carregar as playlists"
   },
   "filters": {
     "locale": "Localização",
