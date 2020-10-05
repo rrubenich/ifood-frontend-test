@@ -1,4 +1,4 @@
-# The Project
+# Spotifood
 
 Spotifood is a project to show a list of featured Spotify's playlists.
 
@@ -70,9 +70,9 @@ yarn build
 
 ## Flow
 
-To fetch the data and handle with errors, queries, filters and refresh every 30 seconds, an approach was created inspired by an event-driven architecture.
+To fetch the data and handle with queries, filters, errors and refresh every 30 seconds, an approach was created inspired by the event-driven architecture.
 
-Every change on states that may affect the listing will trigger a flow of calls.
+Every states change that affect the listing will trigger a flow of calls.
 
 The flow diagram presents the solution:
 
@@ -80,7 +80,7 @@ The flow diagram presents the solution:
 
 ## Libraries
 
-The [Create React App](https://github.com/facebook/create-react-app) was used to bootstrap the project.
+To speed up project creation the [Create React App](https://github.com/facebook/create-react-app) was used.
 
 - [Material UI](https://material-ui.com/) - A complete, fast and customizable React UI Library;
 - [Enzyme](https://github.com/enzymejs/enzyme) - A JavaScript test utility;
@@ -91,10 +91,15 @@ The [Create React App](https://github.com/facebook/create-react-app) was used to
 - [eslint](https://eslint.org/);
 - [prettier](http://prettier.io/).
 
-## Next steps
+## Additional comments
 
 - The i18n was created only to show a multi-language implementation, to add more languages create a new folder with the locale and a file `translation.json` on [public](/public) dir.
 - Only demonstrative tests were created, and real scenario should have a bigger test coverage.
+- Add a loading feedback when the filters are changed and when the data is reloaded by the error state component.
+
+## Known bugs
+
+- The provided USA Country filter doesn't work.
 
 # Original test description
 
