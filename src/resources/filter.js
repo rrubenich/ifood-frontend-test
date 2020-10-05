@@ -1,11 +1,14 @@
 /**
- * @TODO comment this
+ * Create a module to provide methods to fetch the Filter data.
+ *
+ * As the spotify module, using Revealing Module pattern we can expose
+ * only what is needed and keep a clean coding.
  *
  * @namestace filter
  */
 const filter = (function () {
   /**
-   * @TODO comment this
+   * Fetch the available filters
    *
    * @memberof filter
    * @instance

@@ -1,7 +1,7 @@
 /**
  * Enum for display data status.
  *
- * This constant is used to handle the data fetch on containers and pages
+ * This constant is used to handle the data fetch on containers and pages.
  *
  * @readonly
  * @enum {string}

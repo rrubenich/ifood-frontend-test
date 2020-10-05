@@ -37,10 +37,10 @@ class Playlists {
 
   /**
    * Helper to change class values in a immutable way.
-   * Every change will return a new instance of Playlists class
+   * Every change will return a new instance of Playlists class.
    *
-   * @param {string} field - Playlists attribute to update
-   * @param {any} value - Playlists value to update
+   * @param {string} field - Playlists attribute to update.
+   * @param {any} value - Playlists value to update.
    *
    * @return {Playlists}
    * @memberof Playlists
@@ -50,7 +50,7 @@ class Playlists {
   }
 
   /**
-   * Filter the items by an attribute value
+   * Filter the items by an attribute value.
    *
    * @param {string} field
    * @param {string} value
@@ -74,7 +74,7 @@ class Playlists {
   }
 
   /**
-   * Return the first filled array items to create a complete instance of items
+   * Return the first filled array items to create a complete instance of items.
    *
    * @param {Array} originalItems
    * @param {Array} items

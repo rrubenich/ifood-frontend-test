@@ -1,4 +1,102 @@
-# iFood Frontend Test
+# The Project
+
+Spotifood is a project to show a list of featured Spotify's playlists.
+
+The user can filter the data by name using an Search box input or building an API filter with the fields:
+
+- Locale;
+- Country;
+- Date and Time;
+- Page size;
+- Page.
+
+![Screenshot](./docs/images/screenshot.png)
+
+To change the project language, select an option on Locale's Select. The common messages (not the API data) are only english and portuguese, [see the next steps](#next-steps).
+
+# Execution
+
+The project fetch data from Spotify's public APIs, to run it an application should be create in the [Spotify's developer dashboard](https://developer.spotify.com/dashboard/applications).
+
+## Environment variables
+
+If you already have created an application, the Spotify will provite two keys:
+
+- Client Id
+- Client Secret
+
+Copy these keys to [.env](.env) in the variables:
+
+```
+REACT_APP_SPOTIFY_CLIENT_ID: represents the Client Id
+REACT_APP_SPOTIFY_CLIENT_SECRET: represents the Client Secret
+```
+
+## Running the project
+
+After adding the env variables, execute the following commands:
+
+### Install dependencies
+
+```
+yarn install
+```
+
+### Start the project
+
+```
+yarn start
+```
+
+after the start command the project will open a new tab on your browser with the Spotifood project.
+
+## Running the tests
+
+To run all tests, execute the followed command:
+
+```
+yarn test
+```
+
+## Building the application
+
+To build the application for production, execute the followed command:
+
+```
+yarn build
+```
+
+# Technical decisions
+
+## Flow
+
+To fetch the data and handle with errors, queries, filters and refresh every 30 seconds, an approach was created inspired by an event-driven architecture.
+
+Every change on states that may affect the listing will trigger a flow of calls.
+
+The flow diagram presents the solution:
+
+![Flow](./docs/images/flow.png)
+
+## Libraries
+
+The [Create React App](https://github.com/facebook/create-react-app) was used to bootstrap the project.
+
+- [Material UI](https://material-ui.com/) - A complete, fast and customizable React UI Library;
+- [Enzyme](https://github.com/enzymejs/enzyme) - A JavaScript test utility;
+- [Jest](https://jestjs.io/) - A JavaScript test framework;
+- [React i18next](https://github.com/i18next/react-i18next) - An easy adn ready-to-use i18n library;
+- [styled-components](https://styled-components.com/) - Simplify and centralize the project styling;
+- [date-fns](https://date-fns.org/) - A date helper library;
+- [eslint](https://eslint.org/);
+- [prettier](http://prettier.io/).
+
+## Next steps
+
+- The i18n was created only to show a multi-language implementation, to add more languages create a new folder with the locale and a file `translation.json` on [public](/public) dir.
+- Only demonstrative tests were created, and real scenario should have a bigger test coverage.
+
+# Original test description
 
 Create a web application called Spotifood used to display the preferred playlists from iFood's customers. The web application has only one page:
 

@@ -16,7 +16,7 @@ import {
  * @property {string} id - The playlist id;
  * @property {string} name - The playlist title;
  * @property {string} image - An URL to render the playlist cover;
- * @property {string} description - A description to describle the playlist.
+ * @property {string} description - A description to describe the playlist.
  */
 
 /**

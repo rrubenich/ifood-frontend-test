@@ -1,8 +1,8 @@
 /**
- * Create a query string to filter Spotify's playlist data
+ * Create a query string to filter Spotify's playlist data.
  *
- * @param {Filter} filters - An object with the data filters
- * @return {string} A string query to append to spotify fetch path
+ * @param {Filter} filters - An object with the data filters.
+ * @return {string} A string query to append to Spotify fetch path.
  */
 function filterQueryBuilder(filters) {
   if (filters != null && typeof filters === "object") {

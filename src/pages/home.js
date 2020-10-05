@@ -127,7 +127,7 @@ function Home() {
    * Effect hook to fetch the playlists.
    *
    * Is called when the token or the filters are changed.
-   * To avoid unnecessary calls, the token and filter values are valdiated.
+   * To avoid unnecessary calls, the token and filter values are validated.
    *
    * @type {Function}
    */

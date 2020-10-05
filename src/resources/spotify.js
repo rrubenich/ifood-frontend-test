@@ -1,8 +1,8 @@
 /**
- * Create a module to provide methods to fetch the Spotify data
+ * Create a module to provide methods to fetch the Spotify data.
  *
  * Using Revealing Module pattern we can expose only what is needed
- * and keep a clean coding
+ * and keep a clean coding.
  *
  * @namestace spotify
  */
@@ -38,7 +38,7 @@ const spotify = (function () {
   };
 
   /**
-   * Fetch the user API Token
+   * Fetch the user API Token.
    *
    * @memberof spotify
    * @param {string} token

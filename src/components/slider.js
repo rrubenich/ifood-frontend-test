@@ -12,7 +12,7 @@ import { Slider as MUISlider, Tooltip } from "@material-ui/core";
 /**
  * @typedef {Object} ValueLabelProps
  *
- * @property {string} children - The Tooltip nessage;
+ * @property {string} children - The Tooltip message;
  * @property {string} value - The component title.
  */
 
