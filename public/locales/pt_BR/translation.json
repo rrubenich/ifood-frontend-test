@@ -6,7 +6,8 @@
     "none": "Nenhum"
   },
   "playlists": {
-    "description": "Playlists em destaque do Spotify"
+    "description": "Playlists em destaque do Spotify",
+    "error": "Ocorreu um erro para carregar a lista de playlists"
   },
   "filters": {
     "locale": "Localização",
@@ -15,5 +16,6 @@
     "limit": "Quantitidade por página",
     "offset": "Página",
     "error": "Ocorreu um erro para carregar os filtros"
-  }
+  },
+  "reload": "Recarregar"
 }

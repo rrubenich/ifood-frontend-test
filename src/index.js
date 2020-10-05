@@ -10,7 +10,7 @@ import "./index.css";
 ReactDOM.render(
   <MuiThemeProvider theme={MuiTheme}>
     <StyledThemeProvider theme={MuiTheme}>
-      <Suspense fallback="loading">
+      <Suspense fallback="Spotifood">
         <Home />
       </Suspense>
     </StyledThemeProvider>

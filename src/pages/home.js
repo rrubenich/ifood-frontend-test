@@ -6,21 +6,22 @@ import Logo from "../components/logo";
 import PlaylistCard from "../components/playlist-card";
 import PlaylistGrid from "../components/playlist-grid";
 import Search from "../components/search";
-import spotify from "../resources/spotify";
+import STATUS from "../constants/status.js";
+import Pagination from "../components/pagination";
+import ErrorState from "../components/error-state";
+import PlaylistHeader from "../components/playlist-header";
 import FiltersBox from "../containers/filters-box";
 import Filters from "../models/Filters";
 import Playlists from "../models/Playlists";
+import spotify from "../resources/spotify";
 import filterQueryBuilder from "../libs/filter-query-builder";
-import PlaylistHeader from "../components/playlist-header";
-import STATUS from "../constants/status.js";
-import Pagination from "../components/pagination";
 
 const REFRESH_MILLISECONDS_INTERVAL = 30000;
 
 /**
- * Compose the Home page
+ * Compose the Home page.
  *
- * This component is responsible to manage the Playlists APIs data
+ * This component is responsible to manage the Playlists APIs data.
  *
  * @param {Props} props
  * @return {JSX.Element}
@@ -43,7 +44,7 @@ function Home() {
   );
 
   /**
-   * Set the query value when the Search field change
+   * Set the query value when the Search field change.
    *
    * @type {Function}
    */
@@ -53,7 +54,7 @@ function Home() {
   }, []);
 
   /**
-   * Set the filter value when the FiltersBox container change
+   * Set the filter value when the FiltersBox container change.
    *
    * @type {Function}
    */
@@ -65,7 +66,7 @@ function Home() {
   );
 
   /**
-   * Set the filter value when the FiltersBox container change
+   * Set the filter value when the FiltersBox fires a batch change.
    *
    * @type {Function}
    */
@@ -77,7 +78,7 @@ function Home() {
   );
 
   /**
-   * Fetch Playlists from API
+   * Fetch Playlists from API.
    *
    * @type {Function}
    */
@@ -99,18 +100,22 @@ function Home() {
   }, [filter, token]);
 
   /**
-   * Effect hook to fetch the access Token
+   * Effect hook to fetch the access Token.
    *
-   * This hook is the first dispatched effect
-   * To fetch a new token, is necessary set null to token state
+   * This hook is the first dispatched effect.
+   * To fetch a new token, is necessary set null to token state.
    *
    * @type {Function}
    */
   useEffect(() => {
     async function fetchToken() {
-      const accessToken = await spotify.fetchToken();
+      try {
+        const accessToken = await spotify.fetchToken();
 
-      setToken(accessToken);
+        setToken(accessToken);
+      } catch (error) {
+        setStatus(STATUS.ERROR);
+      }
     }
 
     if (token == null) {
@@ -119,10 +124,10 @@ function Home() {
   }, [token]);
 
   /**
-   * Effect hook to fetch the playlists
+   * Effect hook to fetch the playlists.
    *
-   * Is called when the token or the filters are changed
-   * To avoid unnecessary calls, the token and filter values are valdiated
+   * Is called when the token or the filters are changed.
+   * To avoid unnecessary calls, the token and filter values are valdiated.
    *
    * @type {Function}
    */
@@ -134,9 +139,9 @@ function Home() {
 
   /**
    * Effect hook to create the automatic data fetch
-   * every defined REFRESH_MILLISECONDS_INTERVAL const
+   * every defined REFRESH_MILLISECONDS_INTERVAL const.
    *
-   * The interval is updated when the token or the filters are changed
+   * The interval is updated when the token or the filters are changed.
    *
    * @type {Function}
    */
@@ -150,10 +155,10 @@ function Home() {
   }, [handleFetchPlaylists, filter, token]);
 
   /**
-   * Effect hook to filter data by name
+   * Effect hook to filter data by name.
    *
-   * Is called on every query or data change
-   * The shouldFilter state was created to avoid infinite loops with data dependency
+   * Is called on every query or data change.
+   * The shouldFilter state was created to avoid infinite loops with data dependency.
    *
    * @type {Function}
    */
@@ -186,34 +191,39 @@ function Home() {
           />
         </Box>
       </Container>
-      <Container maxWidth="md">
-        <PlaylistHeader
-          message={data.message}
-          loading={status === STATUS.LOADING}
+      {status === STATUS.ERROR ? (
+        <ErrorState
+          message={t("playlists.error")}
+          onReloadClick={handleFetchPlaylists}
         />
-        <PlaylistGrid loading={status === STATUS.LOADING}>
-          {data.items.map(({ id, name, images, description }) => (
-            <PlaylistCard
-              key={id}
-              id={id}
-              name={name}
-              image={images[0].url}
-              description={description}
-            />
-          ))}
-        </PlaylistGrid>
-      </Container>
-      <Container maxWidth="md">
-        <Box display="flex" p={3} justifyContent="flex-end">
-          <Pagination
-            pageSize={filter.limit}
-            offset={filter.offset}
-            itemsTotal={data.total}
-            onChange={handleChangeFilter}
-            shape="rounded"
+      ) : (
+        <Container maxWidth="md">
+          <PlaylistHeader
+            message={data.message}
+            loading={status === STATUS.LOADING}
           />
-        </Box>
-      </Container>
+          <PlaylistGrid loading={status === STATUS.LOADING}>
+            {data.items.map(({ id, name, images, description }) => (
+              <PlaylistCard
+                key={id}
+                id={id}
+                name={name}
+                image={images[0].url}
+                description={description}
+              />
+            ))}
+          </PlaylistGrid>
+          <Box display="flex" p={3} justifyContent="flex-end">
+            <Pagination
+              pageSize={filter.limit}
+              offset={filter.offset}
+              itemsTotal={data.total}
+              onChange={handleChangeFilter}
+              shape="rounded"
+            />
+          </Box>
+        </Container>
+      )}
     </Fragment>
   );
 }

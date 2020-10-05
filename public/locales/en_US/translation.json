@@ -6,7 +6,8 @@
     "none": "No Option"
   },
   "playlists": {
-    "description": "The Spotify featured playlists"
+    "description": "The Spotify featured playlists",
+    "error": "An error occurred while loading the playlists"
   },
   "filters": {
     "locale": "Locale",
@@ -15,5 +16,6 @@
     "limit": "Quantity",
     "offset": "Offset",
     "error": "An error occurred while loading the filters"
-  }
+  },
+  "reload": "Reload"
 }
