@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Grid, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import {
-  KeyboardDatePicker,
+  KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -75,7 +75,7 @@ function FiltersBox(props) {
         onChange("locale", event.target.value);
       },
       country: (event) => onChange("country", event.target.value),
-      timestamp: (value) => onChange("timestamp", value),
+      timestamp: (value) => onChange("timestamp", value.toISOString()),
       limit: (event, value) => onBatchChange({ limit: value, offset: 0 }),
     }),
     [i18n, onChange, onBatchChange],
@@ -110,7 +110,7 @@ function FiltersBox(props) {
         </Grid>
         <Grid item lg={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
+            <KeyboardDateTimePicker
               size="small"
               inputVariant="outlined"
               format="MM/dd/yyyy"
