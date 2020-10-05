@@ -77,6 +77,16 @@ function Home() {
     [filter],
   );
 
+  const handleFetchToken = useCallback(async () => {
+    try {
+      const accessToken = await spotify.fetchToken();
+
+      setToken(accessToken);
+    } catch (error) {
+      setStatus(STATUS.ERROR);
+    }
+  }, []);
+
   /**
    * Fetch Playlists from API.
    *
@@ -108,20 +118,10 @@ function Home() {
    * @type {Function}
    */
   useEffect(() => {
-    async function fetchToken() {
-      try {
-        const accessToken = await spotify.fetchToken();
-
-        setToken(accessToken);
-      } catch (error) {
-        setStatus(STATUS.ERROR);
-      }
-    }
-
     if (token == null) {
-      fetchToken();
+      handleFetchToken();
     }
-  }, [token]);
+  }, [handleFetchToken, token]);
 
   /**
    * Effect hook to fetch the playlists.
@@ -194,7 +194,9 @@ function Home() {
       {status === STATUS.ERROR ? (
         <ErrorState
           message={t("playlists.error")}
-          onReloadClick={handleFetchPlaylists}
+          onReloadClick={
+            token != null ? handleFetchPlaylists : handleFetchToken
+          }
         />
       ) : (
         <Container maxWidth="md">
@@ -213,7 +215,7 @@ function Home() {
               />
             ))}
           </PlaylistGrid>
-          <Box display="flex" pt={4} pm={6} justifyContent="flex-end">
+          <Box display="flex" pt={4} pb={6} justifyContent="flex-end">
             <Pagination
               pageSize={filter.limit}
               offset={filter.offset}
