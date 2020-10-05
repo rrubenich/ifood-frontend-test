@@ -20,12 +20,12 @@ The project fetch data from Spotify's public APIs, to run it an application shou
 
 ## Environment variables
 
-If you already have created an application, the Spotify will provite two keys:
+If you already have created the application the Spotify will provite two keys:
 
 - Client Id
 - Client Secret
 
-Copy these keys to [.env](.env) in the variables:
+Clone the project and copy these keys to [.env](.env) in the variables:
 
 ```
 REACT_APP_SPOTIFY_CLIENT_ID: represents the Client Id
