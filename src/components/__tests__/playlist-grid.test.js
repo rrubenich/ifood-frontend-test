@@ -7,7 +7,7 @@ describe("Test the PlayListGrid component content", () => {
   it("should render one PlaylistCard as a child", () => {
     const component = shallow(
       <PlaylistGrid>
-        <PlaylistCard name="a" />
+        <PlaylistCard id="a" name="a" />
       </PlaylistGrid>,
     );
 
@@ -17,9 +17,9 @@ describe("Test the PlayListGrid component content", () => {
   it("should render three PlaylistCards as a children", () => {
     const component = shallow(
       <PlaylistGrid>
-        <PlaylistCard name="a" />
-        <PlaylistCard name="b" />
-        <PlaylistCard name="c" />
+        <PlaylistCard id="a" name="a" />
+        <PlaylistCard id="b" name="b" />
+        <PlaylistCard id="c" name="c" />
       </PlaylistGrid>,
     );
 

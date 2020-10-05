@@ -13,14 +13,15 @@ import {
 /**
  * @typedef {Object} Props
  *
- * @property {string} name - The playlist title
- * @property {string} image - An URL to render the playlist cover
- * @property {string} description - A description to describle the playlist
+ * @property {string} id - The playlist id;
+ * @property {string} name - The playlist title;
+ * @property {string} image - An URL to render the playlist cover;
+ * @property {string} description - A description to describle the playlist.
  */
 
 /**
  * Set a 100% height to show all cards in a perfect line and the display flex
- * to organize inner components
+ * to organize inner components.
  *
  * @type {import("styled-components").ThemedStyledFunction}
  */
@@ -31,7 +32,7 @@ const StyledCard = styled(Card)`
 `;
 
 /**
- * Set grow factor 1 to assign all container space to description area
+ * Set grow factor 1 to assign all container space to description area.
  *
  * @type {import("styled-components").ThemedStyledFunction}
  */
@@ -40,7 +41,7 @@ const StyledCardContent = styled(CardContent)`
 `;
 
 /**
- * Adding 100% of padding in the Material.CardMedia the image will be shown as a square
+ * Adding 100% of padding in the Material.CardMedia the image will be shown as a square.
  *
  * @type {import("styled-components").ThemedStyledFunction}
  */
@@ -49,9 +50,9 @@ const StyledCardMedia = styled(CardMedia)`
 `;
 
 /**
- * Compose the Spotifood Playlist Card component
+ * Compose the Spotifood Playlist Card component.
  *
- * The Material styled is kept, only a few sizing and position adjusts are made
+ * The Material styled is kept, only a few sizing and position adjusts are made.
  *
  * @param {Props} props
  * @return {JSX.Element}
@@ -60,7 +61,7 @@ function PlaylistCard(props) {
   const { name, description, image } = props;
 
   /**
-   * Checks if an image is passed as prop, otherwise renders an Material.Spinner component
+   * Checks if an image is passed as prop, otherwise renders an Material.Spinner component.
    *
    * @type {JSX.Element}
    */

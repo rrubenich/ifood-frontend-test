@@ -6,27 +6,27 @@ import { Slider as MUISlider, Tooltip } from "@material-ui/core";
 /**
  * @typedef {Object} Props
  *
- * @property {string} label - The component label
+ * @property {string} label - The component label.
  */
 
 /**
  * @typedef {Object} ValueLabelProps
  *
- * @property {string} children - The Tooltip nessage
- * @property {string} value - The component title
+ * @property {string} children - The Tooltip nessage;
+ * @property {string} value - The component title.
  */
 
 /**
- * Render a Tooltip to show the Slider value
+ * Render a Tooltip to show the Slider value.
  *
- * @param {ValueLabelProps} props - Tooltip component props
+ * @param {ValueLabelProps} props - Tooltip component props.
  * @type {Function}
  */
 function renderValueLabelComponent(props) {
   const { children, value } = props;
 
   return (
-    <Tooltip enterTouchDelay={0} placement="top" title={value} {...props}>
+    <Tooltip open={true} enterTouchDelay={0} placement="bottom" title={value}>
       {children}
     </Tooltip>
   );

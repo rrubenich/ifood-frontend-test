@@ -6,12 +6,12 @@ import { Skeleton } from "@material-ui/lab";
 /**
  * @typedef {Object} Props
  *
- * @property {string} loading - Defines if the component is a loading state
- * @property {JSX.Element} children - One or more PlaylistCard component
+ * @property {string} loading - Defines if the component is a loading state;
+ * @property {JSX.Element} children - One or more PlaylistCard component.
  */
 
 /**
- * Create a Grid component to show the list of playlists
+ * Create a Grid component to show the list of playlists.
  *
  * @param {Props} props
  * @type {JSX.Element}
@@ -20,18 +20,17 @@ function PlaylistGrid(props) {
   const { loading, children } = props;
 
   /**
-   * Checks if the received children property is an Array (and if it exists)
+   * Checks if the received children property is an Array (and if it exists).
    *
    * If is the expected, wrapper all elements with Grid Item component
-   * Otherwise just return the received property
+   * Otherwise just return the received property.
    *
    * @type {JSX.Element}
    */
   const items = useMemo(() => {
     if (Array.isArray(children)) {
       return children.map((child) => (
-        // @TODO: handle with react elements ids
-        <Grid key={child.id} xs={6} sm={4} md={3} item>
+        <Grid key={child.props.id} xs={6} sm={4} md={3} item>
           {child}
         </Grid>
       ));

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
 import {
   Select as MUISelect,
   FormControl,
@@ -11,22 +10,21 @@ import {
 /**
  * @typedef {Object} Props
  *
- * @property {string} label - The input label
- * @property {Array} options - An array with selectable options
- * @property {boolean} hideNoOption - Defines if show the option null
+ * @property {string} label - The input label;
+ * @property {Array} options - An array with selectable options.
  */
 
 /**
  * @typedef {Object} OptionProps
  *
- * @property {string} name - The option label
- * @property {string} value - The option value
+ * @property {string} name - The option label;
+ * @property {string} value - The option value.
  */
 
 /**
- * Isolates a function only for rendering the item
+ * Isolates a function only for rendering the item.
  *
- * @param {OptionProps} option - A option object to be rendered
+ * @param {OptionProps} option - A option object to be rendered.
  * @return {JSX.Element}
  */
 function renderOption({ name, value, key }) {
@@ -38,17 +36,16 @@ function renderOption({ name, value, key }) {
 }
 
 /**
- * Compose a Select component
+ * Compose a Select component.
  *
  * @param {Props} props
  * @type {JSX.Element}
  */
 function Select(props) {
-  const { label, options, hideNoOption } = props;
-  const { t } = useTranslation();
+  const { label, options, ...propsRest } = props;
 
   /**
-   * Renders the Select options
+   * Renders the Select options.
    *
    * @type {JSX.Element}
    */
@@ -63,23 +60,16 @@ function Select(props) {
   return (
     <FormControl variant="outlined" size="small" fullWidth>
       <InputLabel>{label}</InputLabel>
-      <MUISelect label={label} {...props}>
-        {!hideNoOption &&
-          renderOption({ name: t("select.none"), value: null, key: "none" })}
+      <MUISelect label={label} {...propsRest}>
         {renderOptions}
       </MUISelect>
     </FormControl>
   );
 }
 
-Select.defaultProps = {
-  hideNoOption: false,
-};
-
 Select.propTypes = {
   label: PropTypes.string,
   options: PropTypes.array,
-  hideNoOption: PropTypes.bool,
 };
 
 export default Select;

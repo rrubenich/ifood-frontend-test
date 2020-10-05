@@ -6,8 +6,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 /**
  * @typedef {Object} Props
  *
- * @property {Function} onChange - Callback called when the field text is changed
- * @property {string} value - The Search Box Input value
+ * @property {string} value - The Search Box Input value.
  */
 
 /**
@@ -17,14 +16,14 @@ import ClearIcon from "@material-ui/icons/Clear";
  * @return {JSX.Element}
  */
 function Search(props) {
-  const { value } = props;
+  const { value, ...restProps } = props;
   const inputRef = useRef(null);
 
   /**
-   * Simulate a native input change when the clear button is clicked
+   * Create a native input event change when the clear button is clicked.
    *
-   * This strategy dispatch change event and avoids the creation of
-   * a specific prop to clear the input
+   * This strategy dispatch a change event and avoids the creation of
+   * a specific prop to clear the input.
    *
    * @type {Function}
    */
@@ -40,7 +39,7 @@ function Search(props) {
   }, []);
 
   /**
-   * Renders the clear icon button when the component receives a value
+   * Renders the clear icon button when the component receives a value.
    *
    * @type {JSX.Element}
    */
@@ -48,8 +47,8 @@ function Search(props) {
     if (value !== "") {
       return (
         <InputAdornment>
-          <IconButton size="small">
-            <ClearIcon onClick={handleOnClear} />
+          <IconButton size="small" onClick={handleOnClear}>
+            <ClearIcon />
           </IconButton>
         </InputAdornment>
       );
@@ -64,11 +63,11 @@ function Search(props) {
       name="search"
       color="primary"
       variant="outlined"
-      value={value}
+      value={value == null ? "" : value}
       inputRef={inputRef}
       InputProps={{ endAdornment }}
       fullWidth
-      {...props}
+      {...restProps}
     />
   );
 }
